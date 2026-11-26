@@ -1,0 +1,36 @@
+import java.util.TreeMap;
+
+public class SortedStudentDatabase {
+    public static void main(String[] args) {
+        TreeMap<Integer, String> db = new TreeMap<>();
+
+        // add student records (automatically sorted by roll number)
+        db.put(105, "Likhith");
+        db.put(101, "Naveen");
+        db.put(104, "Nikhil");
+        db.put(102, "Sai");
+        db.put(103, "Hari");
+
+        // update student name
+        db.put(102, "Sai Kumar");
+
+        // remove a student record
+        db.remove(103);
+
+        // get a student
+        System.out.println("Roll 101: " + db.get(101));
+
+        // first and last roll numbers
+        System.out.println("First Roll: " + db.firstKey());
+        System.out.println("Last Roll: " + db.lastKey());
+
+        // display in ascending order
+        System.out.println("Ascending: " + db);
+
+        // display in descending order
+        System.out.println("Descending: " + db.descendingMap());
+
+        // display within roll number range (101 to 105)
+        System.out.println("Range 101 to 105: " + db.subMap(101, 105));
+    }
+}
