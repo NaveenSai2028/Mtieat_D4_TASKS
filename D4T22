@@ -1,0 +1,40 @@
+import java.util.LinkedList;
+
+public class CustomerServiceQueue {
+    public static void main(String[] args) {
+        LinkedList<String> queue = new LinkedList<>();
+
+        // 1. Add customers to the service queue
+        queue.addLast("Naveen");
+        queue.addLast("Sai");
+        queue.addLast("Hari");
+        queue.addLast("Nikhil");
+        queue.addLast("Likhith");
+
+        // 2. Add emergency customer at the beginning of the queue
+        queue.addFirst("Ganesh (Emergency)");
+
+        // 3. Display all waiting customers
+        System.out.println("Waiting Customers: " + queue);
+
+        // 4. Serve the first customer in the queue
+        System.out.println("Serving: " + queue.poll());
+
+        // 5. Display the next customer to be served
+        System.out.println("Next to be served: " + queue.peek());
+
+        // 6. Remove a particular customer from the queue
+        queue.remove("Hari");
+        System.out.println("After removing Hari: " + queue);
+
+        // 7. Display the total number of waiting customers
+        System.out.println("Total Waiting: " + queue.size());
+
+        // 8. Continue serving customers until the queue becomes empty
+        System.out.println("\nServing remaining customers:");
+        while (!queue.isEmpty()) {
+            System.out.println("Served: " + queue.poll());
+        }
+        System.out.println("Queue empty? " + queue.isEmpty());
+    }
+}
