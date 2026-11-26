@@ -1,0 +1,40 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class EmployeeSalaryManagement {
+    public static void main(String[] args) {
+        HashMap<Integer, Double> map = new HashMap<>();
+
+        // add employee salary records
+        map.put(101, 45000.0);
+        map.put(102, 52000.0);
+        map.put(103, 38000.0);
+        map.put(104, 65000.0);
+        map.put(105, 49000.0);
+
+        // update salary using replace()
+        map.replace(103, 42000.0);
+
+        // search employee by ID
+        System.out.println("ID 102 Salary: " + map.get(102));
+
+        // display all using entrySet() and find highest salary
+        int topId = 0;
+        double maxSalary = 0;
+        for (Map.Entry<Integer, Double> entry : map.entrySet()) {
+            System.out.println("ID: " + entry.getKey() + " -> Salary: " + entry.getValue());
+            if (entry.getValue() > maxSalary) {
+                maxSalary = entry.getValue();
+                topId = entry.getKey();
+            }
+        }
+        System.out.println("Highest Salary -> ID: " + topId + " (" + maxSalary + ")");
+
+        // calculate total salary expenditure using values()
+        double total = 0;
+        for (double sal : map.values()) {
+            total += sal;
+        }
+        System.out.println("Total Expenditure: " + total);
+    }
+}
