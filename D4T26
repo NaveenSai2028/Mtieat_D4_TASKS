@@ -1,0 +1,68 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class BankingAccountManagement {
+    public static void main(String[] args) {
+        // 1. Store account numbers as keys and account balances as values
+        HashMap<Integer, Double> accounts = new HashMap<>();
+
+        // 2. Create new bank accounts
+        accounts.put(1001, 15000.0);
+        accounts.put(1002, 25000.0);
+        accounts.put(1003, 8500.0);
+        accounts.put(1004, 42000.0);
+
+        // 3. Deposit money into an account (preventing operation on non-existing account)
+        int depositAcc = 1001;
+        double depositAmt = 5000.0;
+        if (accounts.containsKey(depositAcc)) {
+            accounts.put(depositAcc, accounts.getOrDefault(depositAcc, 0.0) + depositAmt);
+            System.out.println("Deposited " + depositAmt + " to Account " + depositAcc);
+        } else {
+            System.out.println("Account " + depositAcc + " does not exist.");
+        }
+
+        // 4. Withdraw money from an account
+        int withdrawAcc = 1003;
+        double withdrawAmt = 3000.0;
+        if (accounts.containsKey(withdrawAcc)) {
+            double currentBal = accounts.get(withdrawAcc);
+            if (currentBal >= withdrawAmt) {
+                accounts.put(withdrawAcc, currentBal - withdrawAmt);
+                System.out.println("Withdrew " + withdrawAmt + " from Account " + withdrawAcc);
+            } else {
+                System.out.println("Insufficient balance in Account " + withdrawAcc);
+            }
+        } else {
+            System.out.println("Account " + withdrawAcc + " does not exist.");
+        }
+
+        // 5. Check the balance using an account number
+        int checkAcc = 1002;
+        if (accounts.containsKey(checkAcc)) {
+            System.out.println("Account " + checkAcc + " Balance: " + accounts.get(checkAcc));
+        }
+
+        // 6. Prevent operations on non-existing accounts
+        int invalidAcc = 9999;
+        if (!accounts.containsKey(invalidAcc)) {
+            System.out.println("Operation failed: Account " + invalidAcc + " not found.");
+        }
+
+        // Close/remove an account (demonstrating remove())
+        accounts.remove(1004);
+
+        // 7. Display all account numbers and balances using entrySet()
+        System.out.println("\nAll Active Accounts:");
+        for (Map.Entry<Integer, Double> entry : accounts.entrySet()) {
+            System.out.println("Account No: " + entry.getKey() + " -> Balance: " + entry.getValue());
+        }
+
+        // 8. Calculate the total balance maintained across all accounts using values()
+        double totalBalance = 0.0;
+        for (double bal : accounts.values()) {
+            totalBalance += bal;
+        }
+        System.out.println("\nTotal Bank Balance: " + totalBalance);
+    }
+}
