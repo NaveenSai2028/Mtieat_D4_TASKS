@@ -1,0 +1,30 @@
+import java.util.HashSet;
+
+public class UniqueProductInventory {
+    public static void main(String[] args) {
+        HashSet<String> products = new HashSet<>();
+
+        products.add("Laptop");
+        products.add("Mouse");
+        products.add("Keyboard");
+        products.add("Monitor");
+        products.add("Headphones");
+
+        // add new product
+        products.add("Webcam");
+
+        // attempt duplicate (ignored by HashSet)
+        products.add("Mouse");
+        System.out.println(products);
+
+        // remove discontinued product
+        products.remove("Monitor");
+        System.out.println(products);
+
+        // search product
+        System.out.println(products.contains("Laptop"));
+
+        // total unique products
+        System.out.println(products.size());
+    }
+}
