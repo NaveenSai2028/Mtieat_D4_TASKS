@@ -1,0 +1,40 @@
+import java.util.TreeMap;
+
+public class EmployeeDepartmentManagement {
+    public static void main(String[] args) {
+        // 1. Store employee IDs as keys and department names as values
+        TreeMap<Integer, String> employees = new TreeMap<>();
+
+        // 2. Add new employee records (automatically sorted by employee ID)
+        employees.put(104, "Finance");
+        employees.put(101, "Engineering");
+        employees.put(105, "Marketing");
+        employees.put(102, "HR");
+        employees.put(103, "Operations");
+
+        // 3. Update an employee's department
+        employees.put(102, "Talent Acquisition");
+
+        // 4. Search for an employee using their ID
+        int searchId = 101;
+        if (employees.containsKey(searchId)) {
+            System.out.println("Employee " + searchId + " Department: " + employees.get(searchId));
+        }
+
+        // 5. Remove an employee record
+        employees.remove(103);
+
+        // First and last employee IDs
+        System.out.println("First Employee ID: " + employees.firstKey());
+        System.out.println("Last Employee ID: " + employees.lastKey());
+
+        // 6. Display all employees in ascending order of employee IDs
+        System.out.println("Ascending Order: " + employees);
+
+        // 7. Display employee records in descending order
+        System.out.println("Descending Order: " + employees.descendingMap());
+
+        // 8. Display employees within a given ID range (101 to 105)
+        System.out.println("Employees in ID range 101 to 105: " + employees.subMap(101, 105));
+    }
+}
