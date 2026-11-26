@@ -1,0 +1,39 @@
+import java.util.HashMap;
+
+public class StudentMarksManagement {
+    public static void main(String[] args) {
+        HashMap<String, Integer> map = new HashMap<>();
+
+        // add student records
+        map.put("Naveen", 92);
+        map.put("Sai", 85);
+        map.put("Hari", 78);
+        map.put("Nikhil", 88);
+        map.put("Likhith", 90);
+        System.out.println(map);
+
+        // update marks
+        map.put("Sai", 95);
+        System.out.println(map);
+
+        // search student's marks
+        if (map.containsKey("Naveen")) {
+            System.out.println("Naveen's Marks: " + map.get("Naveen"));
+        }
+
+        // remove record
+        map.remove("Hari");
+
+        // display all student names and marks using keySet()
+        for (String name : map.keySet()) {
+            System.out.println(name + " : " + map.get(name));
+        }
+
+        // calculate average marks using values()
+        int sum = 0;
+        for (int mark : map.values()) {
+            sum += mark;
+        }
+        System.out.println("Average Marks: " + (double) sum / map.size());
+    }
+}
