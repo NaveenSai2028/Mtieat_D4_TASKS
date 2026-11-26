@@ -1,0 +1,34 @@
+import java.util.TreeSet;
+
+public class SortedEmployeeID {
+    public static void main(String[] args) {
+        TreeSet<Integer> ids = new TreeSet<>();
+
+        ids.add(105);
+        ids.add(101);
+        ids.add(108);
+        ids.add(103);
+        ids.add(110);
+
+        // automatically sorted
+        System.out.println(ids);
+
+        // add and remove
+        ids.add(106);
+        ids.remove(103);
+        System.out.println(ids);
+
+        // smallest and largest
+        System.out.println(ids.first());
+        System.out.println(ids.last());
+
+        // next higher and lower for 106
+        System.out.println(ids.higher(106));
+        System.out.println(ids.lower(106));
+
+        // range methods
+        System.out.println(ids.headSet(106));
+        System.out.println(ids.tailSet(106));
+        System.out.println(ids.subSet(102, 109));
+    }
+}
