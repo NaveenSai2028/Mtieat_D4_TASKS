@@ -1,0 +1,32 @@
+import java.util.ArrayList;
+
+public class StudentNameManagement {
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+
+        list.add("Naveen");
+        list.add("Sai");
+        list.add("Hari");
+        list.add("Nikhil");
+        list.add("Likhith");
+        list.add("Ganesh");
+        list.add("Shiva");
+        list.add("Vikram");
+        list.add("Vijay");
+        list.add("Dhanush");
+
+        System.out.println(list);
+
+        list.add(2, "Karthik");
+        System.out.println(list);
+
+        list.remove("Hari");
+        System.out.println(list);
+
+        list.set(3, "Nikhil K");
+        System.out.println(list);
+
+        System.out.println(list.contains("Naveen"));
+        System.out.println(list.size());
+    }
+}
