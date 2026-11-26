@@ -1,0 +1,37 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class LibraryBookManagement {
+    public static void main(String[] args) {
+        ArrayList<String> books = new ArrayList<>();
+
+        // store book titles in an ArrayList
+        books.add("Clean Code");
+        books.add("Effective Java");
+        books.add("Data Structures and Algorithms");
+        books.add("Operating Systems");
+        books.add("Database Management Systems");
+
+        // add new book to the library
+        books.add("Computer Networks");
+
+        // remove damaged or unavailable book
+        books.remove("Operating Systems");
+
+        // update an existing book title using set()
+        books.set(1, "Effective Java (3rd Edition)");
+
+        // search for a book using its title
+        System.out.println("Is 'Clean Code' available? " + books.contains("Clean Code"));
+
+        // display all available books
+        System.out.println("Available Books: " + books);
+
+        // display total number of books
+        System.out.println("Total Books: " + books.size());
+
+        // display books in reverse order
+        Collections.reverse(books);
+        System.out.println("Books in Reverse Order: " + books);
+    }
+}
