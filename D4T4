@@ -1,0 +1,29 @@
+import java.util.LinkedList;
+
+public class MusicPlaylist {
+    public static void main(String[] args) {
+        LinkedList<String> list = new LinkedList<>();
+
+        list.add("Bagundo Poo");
+        list.add("Aeroplane");
+        list.add("Sahana");
+        list.add("Pesamale");
+        list.add("Rathinamo");
+
+        list.addFirst("Baarsat");
+        list.addLast("Aarzu");
+        System.out.println(list);
+
+        System.out.println(list.getFirst());
+        System.out.println(list.getLast());
+
+        list.removeFirst();
+        list.removeLast();
+        System.out.println(list);
+
+        System.out.println(list.contains("Sahana"));
+
+        System.out.println("Playing next: " + list.removeFirst());
+        System.out.println(list);
+    }
+}
