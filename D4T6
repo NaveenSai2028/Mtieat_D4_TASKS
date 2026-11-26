@@ -1,1 +1,44 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class ProductPriceList {
+    public static void main(String[] args) {
+        ArrayList<Double> prices = new ArrayList<>();
+
+        prices.add(150.0);
+        prices.add(299.0);
+        prices.add(99.0);
+        prices.add(450.0);
+        prices.add(120.0);
+        prices.add(800.0);
+        prices.add(350.0);
+        prices.add(60.0);
+        prices.add(520.0);
+        prices.add(210.0);
+
+        System.out.println(prices);
+
+        prices.set(2, 110.0);
+        System.out.println(prices);
+
+        System.out.println(Collections.max(prices));
+        System.out.println(Collections.min(prices));
+
+        double sum = 0;
+        for (int i = 0; i < prices.size(); i++) {
+            sum += prices.get(i);
+        }
+        System.out.println(sum / prices.size());
+
+        Collections.sort(prices);
+        System.out.println(prices);
+
+        for (int i = 0; i < prices.size(); i++) {
+            double p = prices.get(i);
+            if (p >= 100.0 && p <= 400.0) {
+                System.out.println(p);
+            }
+        }
+    }
+}
 
