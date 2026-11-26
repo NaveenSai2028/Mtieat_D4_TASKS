@@ -1,0 +1,28 @@
+import java.util.ArrayList;
+
+public class EmployeeAttendance {
+    public static void main(String[] args) {
+        ArrayList<String> list = new ArrayList<>();
+
+        list.add("Naveen");
+        list.add("Sai");
+        list.add("Hari");
+        list.add("Nikhil");
+        list.add("Likhith");
+
+        System.out.println(list);
+
+        list.add("Ganesh");
+        System.out.println(list);
+
+        list.remove("Hari");
+        System.out.println(list);
+
+        System.out.println(list.contains("Naveen"));
+        System.out.println(list.size());
+
+        for (int i = list.size() - 1; i >= 0; i--) {
+            System.out.println(list.get(i));
+        }
+    }
+}
