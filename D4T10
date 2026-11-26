@@ -1,0 +1,28 @@
+import java.util.TreeSet;
+
+public class ExamScoreRanking {
+    public static void main(String[] args) {
+        TreeSet<Integer> scores = new TreeSet<>();
+
+        scores.add(85);
+        scores.add(92);
+        scores.add(76);
+        scores.add(88);
+        scores.add(95);
+        scores.add(85); // duplicate ignored
+
+        // ascending order
+        System.out.println(scores);
+
+        // lowest and highest
+        System.out.println("Lowest: " + scores.first());
+        System.out.println("Highest: " + scores.last());
+
+        // immediately higher and lower than 88
+        System.out.println("Higher than 88: " + scores.higher(88));
+        System.out.println("Lower than 88: " + scores.lower(88));
+
+        // descending order
+        System.out.println("Descending: " + scores.descendingSet());
+    }
+}
