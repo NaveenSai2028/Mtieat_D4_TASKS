@@ -1,0 +1,40 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class ProductInventoryManagement {
+    public static void main(String[] args) {
+        HashMap<Integer, Integer> inventory = new HashMap<>();
+
+        // add new products (ID -> quantity)
+        inventory.put(101, 10);
+        inventory.put(102, 4);
+        inventory.put(103, 15);
+        inventory.put(104, 2);
+        inventory.put(105, 8);
+
+        // update product quantity
+        inventory.put(101, 12);
+
+        // reduce quantity when sold using getOrDefault()
+        int soldId = 104, soldQty = 2;
+        int currentQty = inventory.getOrDefault(soldId, 0);
+        inventory.put(soldId, currentQty - soldQty);
+
+        // search product using ID
+        System.out.println("Product 103 Qty: " + inventory.get(103));
+
+        // display products with quantities below 5 using entrySet()
+        System.out.println("Low stock (below 5):");
+        for (Map.Entry<Integer, Integer> entry : inventory.entrySet()) {
+            if (entry.getValue() < 5) {
+                System.out.println("ID: " + entry.getKey() + " -> Qty: " + entry.getValue());
+            }
+        }
+
+        // remove out of stock products (qty <= 0)
+        if (inventory.get(104) <= 0) {
+            inventory.remove(104);
+        }
+        System.out.println("Updated Inventory: " + inventory);
+    }
+}
