@@ -1,0 +1,35 @@
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public class OrderProcessingSystem {
+    public static void main(String[] args) {
+        LinkedHashMap<Integer, String> orders = new LinkedHashMap<>();
+
+        // store order IDs as keys and customer names as values (maintains insertion order)
+        orders.put(1001, "Naveen");
+        orders.put(1002, "Sai");
+        orders.put(1003, "Hari");
+        orders.put(1004, "Nikhil");
+        orders.put(1005, "Likhith");
+
+        // add new order
+        orders.put(1006, "Ganesh");
+
+        // update customer information for an existing order
+        orders.put(1002, "Sai Kumar");
+
+        // cancel an order
+        orders.remove(1003);
+
+        // search for an order using its ID
+        if (orders.containsKey(1001)) {
+            System.out.println("Order 1001 Customer: " + orders.get(1001));
+        }
+
+        // display all orders in the order they were received
+        System.out.println("Orders in received order:");
+        for (Map.Entry<Integer, String> entry : orders.entrySet()) {
+            System.out.println("Order ID: " + entry.getKey() + " -> Customer: " + entry.getValue());
+        }
+    }
+}
