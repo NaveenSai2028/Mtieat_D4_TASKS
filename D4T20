@@ -1,0 +1,47 @@
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public class DailySalesManagement {
+    public static void main(String[] args) {
+        LinkedHashMap<String, Integer> sales = new LinkedHashMap<>();
+
+        // store product names as keys and sales quantities as values (maintains insertion order)
+        sales.put("Laptop", 12);
+        sales.put("Mouse", 45);
+        sales.put("Keyboard", 30);
+        sales.put("Monitor", 18);
+        sales.put("Headphones", 25);
+
+        // add new product sale
+        sales.put("Webcam", 15);
+
+        // update sales quantity
+        sales.put("Mouse", 50);
+
+        // get specific product sales
+        System.out.println("Keyboard Sales: " + sales.get("Keyboard"));
+
+        // display all products and their sales in insertion order using entrySet()
+        // and find the product with the highest sales quantity
+        String topProduct = "";
+        int maxQty = 0;
+
+        System.out.println("\nDaily Sales Report (Insertion Order):");
+        for (Map.Entry<String, Integer> entry : sales.entrySet()) {
+            System.out.println(entry.getKey() + " : " + entry.getValue());
+            if (entry.getValue() > maxQty) {
+                maxQty = entry.getValue();
+                topProduct = entry.getKey();
+            }
+        }
+
+        // calculate total quantity of products sold using values()
+        int totalQty = 0;
+        for (int qty : sales.values()) {
+            totalQty += qty;
+        }
+
+        System.out.println("\nTotal Quantity Sold: " + totalQty);
+        System.out.println("Highest Selling Product: " + topProduct + " (" + maxQty + ")");
+    }
+}
