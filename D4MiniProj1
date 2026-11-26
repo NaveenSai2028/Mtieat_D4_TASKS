@@ -1,0 +1,214 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Scanner;
+
+public class StudentManagementSystem {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        ArrayList<Integer> ids = new ArrayList<>();
+        ArrayList<String> names = new ArrayList<>();
+        ArrayList<Integer> marks = new ArrayList<>();
+        LinkedList<String> attendance = new LinkedList<>();
+
+        int choice;
+
+        do {
+            System.out.println("\n====================================");
+            System.out.println("STUDENT MANAGEMENT SYSTEM");
+            System.out.println("====================================");
+            System.out.println("1. Add Student");
+            System.out.println("2. Display All Students");
+            System.out.println("3. Search Student");
+            System.out.println("4. Update Student Marks");
+            System.out.println("5. Remove Student");
+            System.out.println("6. Add Student Attendance");
+            System.out.println("7. Display Attendance");
+            System.out.println("8. Remove Attendance");
+            System.out.println("9. Display Student Statistics");
+            System.out.println("10. Sort Student Names");
+            System.out.println("11. Exit");
+            System.out.print("Enter Your Choice: ");
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1: // Module 1: Add Student Details
+                    System.out.print("Enter Student ID: ");
+                    int id = sc.nextInt();
+                    sc.nextLine();
+                    System.out.print("Enter Student Name: ");
+                    String name = sc.nextLine();
+                    System.out.print("Enter Student Marks: ");
+                    int mark = sc.nextInt();
+
+                    if (mark < 0 || mark > 100) {
+                        System.out.println("Invalid Marks! Enter between 0 and 100.");
+                    } else {
+                        ids.add(id);
+                        names.add(name);
+                        marks.add(mark);
+                        System.out.println("Student Added Successfully!");
+                    }
+                    break;
+
+                case 2: // Module 2: Display All Students
+                    if (names.isEmpty()) {
+                        System.out.println("No student records found.");
+                    } else {
+                        System.out.println("\nSTUDENT RECORDS");
+                        System.out.println("ID\tStudent Name\tMarks");
+                        for (int i = 0; i < names.size(); i++) {
+                            System.out.println(ids.get(i) + "\t" + names.get(i) + "\t\t" + marks.get(i));
+                        }
+                        System.out.println("Total Students: " + names.size());
+                    }
+                    break;
+
+                case 3: // Module 3: Search Student
+                    System.out.print("Enter Student Name: ");
+                    String searchName = sc.nextLine();
+                    if (names.contains(searchName)) {
+                        int idx = names.indexOf(searchName);
+                        System.out.println("Student Found!");
+                        System.out.println("ID: " + ids.get(idx));
+                        System.out.println("Name: " + names.get(idx));
+                        System.out.println("Marks: " + marks.get(idx));
+                    } else {
+                        System.out.println("Student not found!");
+                    }
+                    break;
+
+                case 4: // Module 4: Update Student Marks
+                    System.out.print("Enter Student Name: ");
+                    String updateName = sc.nextLine();
+                    if (names.contains(updateName)) {
+                        int idx = names.indexOf(updateName);
+                        System.out.print("Enter New Marks: ");
+                        int newMark = sc.nextInt();
+                        if (newMark < 0 || newMark > 100) {
+                            System.out.println("Invalid Marks! Enter between 0 and 100.");
+                        } else {
+                            marks.set(idx, newMark);
+                            System.out.println("Student Marks Updated Successfully!");
+                            System.out.println("Updated Record -> Name: " + names.get(idx) + ", Marks: " + marks.get(idx));
+                        }
+                    } else {
+                        System.out.println("Student not found!");
+                    }
+                    break;
+
+                case 5: // Module 5: Remove Student
+                    System.out.print("Enter Student Name: ");
+                    String removeName = sc.nextLine();
+                    if (names.contains(removeName)) {
+                        int idx = names.indexOf(removeName);
+                        ids.remove(idx);
+                        names.remove(idx);
+                        marks.remove(idx);
+                        System.out.println("Student Removed Successfully!");
+                        System.out.println("Updated Student List: " + names);
+                    } else {
+                        System.out.println("Student not found!");
+                    }
+                    break;
+
+                case 6: // Module 6: Add Student Attendance (LinkedList)
+                    System.out.println("1. Add Normally  2. Add at Beginning  3. Add at End");
+                    System.out.print("Choose option: ");
+                    int attOpt = sc.nextInt();
+                    sc.nextLine();
+                    System.out.print("Enter Student Name: ");
+                    String attName = sc.nextLine();
+
+                    if (attOpt == 2) {
+                        attendance.addFirst(attName);
+                    } else if (attOpt == 3) {
+                        attendance.addLast(attName);
+                    } else {
+                        attendance.add(attName);
+                    }
+                    System.out.println("Attendance Added!");
+                    break;
+
+                case 7: // Module 6: Display & Search Attendance
+                    if (attendance.isEmpty()) {
+                        System.out.println("Attendance list is empty.");
+                    } else {
+                        System.out.println("Present Students: " + attendance);
+                        System.out.println("Total Present: " + attendance.size());
+                        System.out.print("Search student in attendance (or press Enter to skip): ");
+                        String checkAtt = sc.nextLine();
+                        if (!checkAtt.isEmpty()) {
+                            System.out.println(checkAtt + " present? " + attendance.contains(checkAtt));
+                        }
+                    }
+                    break;
+
+                case 8: // Module 6: Remove Attendance
+                    if (attendance.isEmpty()) {
+                        System.out.println("Attendance list is already empty.");
+                    } else {
+                        System.out.print("Enter Student Name to Remove (or type 'clear' to clear all): ");
+                        String remAtt = sc.nextLine();
+                        if (remAtt.equalsIgnoreCase("clear")) {
+                            attendance.clear();
+                            System.out.println("Attendance cleared!");
+                        } else if (attendance.remove(remAtt)) {
+                            System.out.println("Removed from attendance!");
+                        } else {
+                            System.out.println("Student not found in attendance.");
+                        }
+                    }
+                    break;
+
+                case 9: // Module 7: Display Student Statistics
+                    if (marks.isEmpty()) {
+                        System.out.println("No student marks available.");
+                    } else {
+                        int highest = Collections.max(marks);
+                        int lowest = Collections.min(marks);
+                        int sum = 0, above75 = 0;
+
+                        for (int m : marks) {
+                            sum += m;
+                            if (m > 75) {
+                                above75++;
+                            }
+                        }
+                        double avg = (double) sum / marks.size();
+
+                        System.out.println("Total Students: " + names.size());
+                        System.out.println("Highest Marks: " + highest);
+                        System.out.println("Lowest Marks: " + lowest);
+                        System.out.println("Average Marks: " + avg);
+                        System.out.println("Students Above 75: " + above75);
+                    }
+                    break;
+
+                case 10: // Module 7: Sort & Reverse Student Names
+                    if (names.isEmpty()) {
+                        System.out.println("No students to sort.");
+                    } else {
+                        ArrayList<String> sortedNames = new ArrayList<>(names);
+                        Collections.sort(sortedNames);
+                        System.out.println("Alphabetical Order: " + sortedNames);
+
+                        Collections.reverse(sortedNames);
+                        System.out.println("Reverse Order: " + sortedNames);
+                    }
+                    break;
+
+                case 11:
+                    System.out.println("Exiting Student Management System...");
+                    break;
+
+                default:
+                    System.out.println("Invalid Choice! Please try again.");
+            }
+        } while (choice != 11);
+
+        sc.close();
+    }
+}
