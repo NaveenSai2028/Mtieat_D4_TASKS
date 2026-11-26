@@ -1,0 +1,27 @@
+import java.util.LinkedHashSet;
+
+public class RecentlyAddedContacts {
+    public static void main(String[] args) {
+        LinkedHashSet<String> contacts = new LinkedHashSet<>();
+
+        contacts.add("Naveen");
+        contacts.add("Sai");
+        contacts.add("Hari");
+        contacts.add("Nikhil");
+        contacts.add("Likhith");
+
+        // add new contact
+        contacts.add("Ganesh");
+
+        // duplicate ignored, insertion order maintained
+        contacts.add("Sai");
+        System.out.println(contacts);
+
+        // remove contact
+        contacts.remove("Hari");
+        System.out.println(contacts);
+
+        // search contact
+        System.out.println(contacts.contains("Naveen"));
+    }
+}
