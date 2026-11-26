@@ -1,0 +1,50 @@
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public class FoodDeliveryOrderTracking {
+    public static void main(String[] args) {
+        // 1. Store order IDs as keys and order statuses as values (maintains insertion order)[span_0](start_span)[span_0](end_span)
+        LinkedHashMap<Integer, String> orders = new LinkedHashMap<>();
+
+        // 2. Add new customer orders[span_1](start_span)[span_1](end_span)
+        orders.put(501, "Preparing");
+        orders.put(502, "Preparing");
+        orders.put(503, "Packed");
+        orders.put(504, "Out for Delivery");
+        orders.put(505, "Preparing");
+
+        // 3. Update order status to Preparing, Packed, Out for Delivery, or Delivered[span_2](start_span)[span_2](end_span)
+        orders.put(501, "Packed");
+        orders.put(504, "Delivered");
+        orders.put(502, "Out for Delivery");
+
+        // 4. Search for an order using its ID[span_3](start_span)[span_3](end_span)
+        int searchId = 502;
+        if (orders.containsKey(searchId)) {
+            System.out.println("Order " + searchId + " Status: " + orders.get(searchId));
+        } else {
+            System.out.println("Order " + searchId + " not found.");
+        }
+
+        // 5. Cancel an order by removing it from active orders[span_4](start_span)[span_4](end_span)
+        orders.remove(505);
+
+        // 6. Display all orders in the order they were received using entrySet()[span_5](start_span)[span_5](end_span)
+        System.out.println("\nActive Orders (In Received Order):");
+        for (Map.Entry<Integer, String> entry : orders.entrySet()) {
+            System.out.println("Order ID: " + entry.getKey() + " -> Status: " + entry.getValue());
+        }
+
+        // 7. Count how many orders are currently in each status using getOrDefault()[span_6](start_span)[span_6](end_span)
+        HashMap<String, Integer> statusCounts = new HashMap<>();
+        for (String status : orders.values()) {
+            statusCounts.put(status, statusCounts.getOrDefault(status, 0) + 1);
+        }
+
+        System.out.println("\nOrder Count by Status:");
+        for (Map.Entry<String, Integer> entry : statusCounts.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+    }
+}
