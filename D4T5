@@ -1,0 +1,28 @@
+import java.util.LinkedList;
+
+public class BrowserHistory {
+    public static void main(String[] args) {
+        LinkedList<String> history = new LinkedList<>();
+
+        history.add("https://google.com");
+        history.add("https://github.com");
+        history.add("https://leetcode.com");
+        history.add("https://stackoverflow.com");
+
+        System.out.println(history);
+
+        history.add("https://youtube.com");
+        System.out.println(history);
+
+        history.removeLast();
+        System.out.println(history);
+
+        System.out.println(history.getFirst());
+        System.out.println(history.getLast());
+
+        System.out.println(history.contains("https://github.com"));
+
+        history.clear();
+        System.out.println(history);
+    }
+}
