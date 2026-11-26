@@ -1,0 +1,32 @@
+import java.util.LinkedHashSet;
+
+public class RecentlyViewedProducts {
+    public static void main(String[] args) {
+        // 1. Store product names in the order they are viewed
+        LinkedHashSet<String> viewedProducts = new LinkedHashSet<>();
+        viewedProducts.add("Smartphone");
+        viewedProducts.add("Wireless Earbuds");
+        viewedProducts.add("Laptop");
+        viewedProducts.add("Smartwatch");
+        viewedProducts.add("Mechanical Keyboard");
+
+        // 2. Add newly viewed products
+        viewedProducts.add("Gaming Mouse");
+
+        // 3. Prevent duplicate product names (automatically ignored by LinkedHashSet)
+        viewedProducts.add("Laptop");
+
+        // 4. Display recently viewed products in insertion order
+        System.out.println("Recently Viewed Products: " + viewedProducts);
+
+        // 5. Search whether a product was viewed
+        System.out.println("Was Laptop viewed? " + viewedProducts.contains("Laptop"));
+
+        // 6. Remove a product from the recently viewed list
+        viewedProducts.remove("Smartwatch");
+        System.out.println("After removing Smartwatch: " + viewedProducts);
+
+        // 7. Display the total number of unique viewed products
+        System.out.println("Total Unique Viewed Products: " + viewedProducts.size());
+    }
+}
