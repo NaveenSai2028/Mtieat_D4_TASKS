@@ -1,0 +1,37 @@
+//Task18: Online Examination Result SystemCreate an examination result management system using TreeMap.Requirements:Store student roll numbers as keys and marks as values.Automatically arrange records by roll number.Add and update examination results.Display all student results.Find the highest and lowest marks.Display students whose roll numbers fall within a given range.Display results in reverse roll number order.Concepts: TreeMap, put(), get(), firstEntry(), lastEntry(), subMap(), descendingMap().
+import java.util.Collections;
+import java.util.TreeMap;
+
+public class OnlineExamResultSystem {
+    public static void main(String[] args) {
+        TreeMap<Integer, Integer> results = new TreeMap<>();
+
+        // add exam results (automatically sorted by roll number)
+        results.put(104, 88);
+        results.put(101, 92);
+        results.put(105, 76);
+        results.put(102, 85);
+        results.put(103, 95);
+
+        // update exam result
+        results.put(105, 81);
+
+        // display all student results & get specific roll result
+        System.out.println("All Results: " + results);
+        System.out.println("Roll 101 Marks: " + results.get(101));
+
+        // first and last roll entries
+        System.out.println("First Entry: " + results.firstEntry());
+        System.out.println("Last Entry: " + results.lastEntry());
+
+        // find highest and lowest marks
+        System.out.println("Highest Marks: " + Collections.max(results.values()));
+        System.out.println("Lowest Marks: " + Collections.min(results.values()));
+
+        // display students within roll number range (101 to 104)
+        System.out.println("Range 101 to 104: " + results.subMap(101, 104));
+
+        // display results in reverse roll number order
+        System.out.println("Reverse Order: " + results.descendingMap());
+    }
+}
