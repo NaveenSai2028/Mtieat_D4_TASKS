@@ -1,0 +1,376 @@
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.TreeSet;
+
+public class ProductInventorySystem {
+    // Required collections
+    private static HashMap<Integer, Integer> inventory = new HashMap<>(); // Product ID -> Available Quantity
+    private static HashSet<String> categories = new HashSet<>();          // Unique categories
+    private static LinkedHashSet<String> recentProducts = new LinkedHashSet<>(); // Recently added product names in insertion order
+
+    // Supporting maps for product metadata mapped by matching Product ID
+    private static HashMap<Integer, String> productNames = new HashMap<>();
+    private static HashMap<Integer, String> productCategories = new HashMap<>();
+    private static HashMap<Integer, Double> productPrices = new HashMap<>();
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int choice;
+
+        do {
+            System.out.println("\n====================================");
+            System.out.println("PRODUCT INVENTORY SYSTEM");
+            System.out.println("====================================");
+            System.out.println("1. Add Product");
+            System.out.println("2. Display All Products");
+            System.out.println("3. Search Product");
+            System.out.println("4. Update Product Quantity");
+            System.out.println("5. Sell Product");
+            System.out.println("6. Remove Product");
+            System.out.println("7. Add Product Category");
+            System.out.println("8. Display Unique Categories");
+            System.out.println("9. Display Sorted Categories");
+            System.out.println("10. Display Recently Added Products");
+            System.out.println("11. Generate Inventory Report");
+            System.out.println("12. Exit");
+            System.out.print("Enter Your Choice: ");
+            choice = sc.nextInt();
+            sc.nextLine();
+
+            switch (choice) {
+                case 1:
+                    addProduct(sc);
+                    break;
+                case 2:
+                    displayAllProducts();
+                    break;
+                case 3:
+                    searchProduct(sc);
+                    break;
+                case 4:
+                    updateProductQuantity(sc);
+                    break;
+                case 5:
+                    sellProduct(sc);
+                    break;
+                case 6:
+                    removeProduct(sc);
+                    break;
+                case 7:
+                    manageCategories(sc);
+                    break;
+                case 8:
+                    displayUniqueCategories();
+                    break;
+                case 9:
+                    displaySortedCategories();
+                    break;
+                case 10:
+                    manageRecentProducts(sc);
+                    break;
+                case 11:
+                    generateInventoryReport();
+                    break;
+                case 12:
+                    System.out.println("Exiting Product Inventory System...");
+                    break;
+                default:
+                    System.out.println("Invalid Choice! Please enter 1-12.");
+            }
+        } while (choice != 12);
+
+        sc.close();
+    }
+
+    // Module 1: Add Product
+    private static void addProduct(Scanner sc) {
+        System.out.print("Product ID: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+
+        if (inventory.containsKey(id)) {
+            System.out.println("Error: Product ID " + id + " already exists!");
+            return;
+        }
+
+        System.out.print("Product Name: ");
+        String name = sc.nextLine();
+        System.out.print("Category: ");
+        String category = sc.nextLine();
+        System.out.print("Price: ");
+        double price = sc.nextDouble();
+        System.out.print("Quantity: ");
+        int qty = sc.nextInt();
+
+        if (qty < 0 || price < 0) {
+            System.out.println("Error: Price and quantity cannot be negative!");
+            return;
+        }
+
+        inventory.put(id, qty);
+        productNames.put(id, name);
+        productCategories.put(id, category);
+        productPrices.put(id, price);
+
+        categories.add(category);
+        recentProducts.add(name);
+
+        System.out.println("Product Added Successfully!");
+    }
+
+    // Module 2: Display Products
+    private static void displayAllProducts() {
+        if (inventory.isEmpty()) {
+            System.out.println("Inventory is empty.");
+            return;
+        }
+
+        System.out.println("\nPRODUCT INVENTORY");
+        System.out.printf("%-8s %-18s %-15s %-12s %-10s%n", "ID", "Product", "Category", "Price", "Quantity");
+        System.out.println("------------------------------------------------------------------");
+        for (int id : inventory.keySet()) {
+            System.out.printf("%-8d %-18s %-15s %-12.2f %-10d%n",
+                    id,
+                    productNames.get(id),
+                    productCategories.get(id),
+                    productPrices.get(id),
+                    inventory.get(id));
+        }
+        System.out.println("------------------------------------------------------------------");
+        System.out.println("Total Number of Products: " + inventory.size());
+    }
+
+    // Module 6 (Part 1): Search Product
+    private static void searchProduct(Scanner sc) {
+        System.out.print("Enter Product ID: ");
+        int id = sc.nextInt();
+
+        if (inventory.containsKey(id)) {
+            System.out.println("Product Found:");
+            System.out.println("ID: " + id +
+                    " | Name: " + productNames.get(id) +
+                    " | Category: " + productCategories.get(id) +
+                    " | Price: " + productPrices.get(id) +
+                    " | Available Quantity: " + inventory.get(id));
+        } else {
+            System.out.println("Product with ID " + id + " does not exist.");
+        }
+    }
+
+    // Module 6 (Part 2): Increase Stock / Update Quantity
+    private static void updateProductQuantity(Scanner sc) {
+        System.out.print("Enter Product ID: ");
+        int id = sc.nextInt();
+
+        if (!inventory.containsKey(id)) {
+            System.out.println("Error: Product ID " + id + " does not exist.");
+            return;
+        }
+
+        System.out.print("Enter Quantity to Add (New Stock): ");
+        int addQty = sc.nextInt();
+        if (addQty < 0) {
+            System.out.println("Error: Stock addition cannot be negative!");
+            return;
+        }
+
+        int updatedQty = inventory.get(id) + addQty;
+        inventory.put(id, updatedQty);
+        System.out.println("Stock Updated Successfully!");
+        System.out.println("Product: " + productNames.get(id));
+        System.out.println("Available Quantity: " + updatedQty);
+    }
+
+    // Module 6 (Part 3): Sell Product (Decrease Quantity)
+    private static void sellProduct(Scanner sc) {
+        System.out.print("Enter Product ID: ");
+        int id = sc.nextInt();
+
+        if (!inventory.containsKey(id)) {
+            System.out.println("Error: Product ID " + id + " does not exist.");
+            return;
+        }
+
+        System.out.print("Enter Quantity Sold: ");
+        int soldQty = sc.nextInt();
+
+        if (soldQty <= 0) {
+            System.out.println("Error: Sold quantity must be greater than zero.");
+            return;
+        }
+
+        int available = inventory.get(id);
+        if (soldQty > available) {
+            System.out.println("Error: Insufficient stock! Available quantity is only " + available + ".");
+            return;
+        }
+
+        int remaining = available - soldQty;
+        inventory.put(id, remaining);
+        System.out.println("Sale Completed Successfully!");
+        System.out.println("Product ID: " + id);
+        System.out.println("Product: " + productNames.get(id));
+        System.out.println("Remaining Quantity: " + remaining);
+    }
+
+    // Module 6 (Part 4): Remove Product
+    private static void removeProduct(Scanner sc) {
+        System.out.print("Enter Product ID to Remove: ");
+        int id = sc.nextInt();
+
+        if (!inventory.containsKey(id)) {
+            System.out.println("Error: Product ID " + id + " does not exist.");
+            return;
+        }
+
+        String removedName = productNames.remove(id);
+        inventory.remove(id);
+        productCategories.remove(id);
+        productPrices.remove(id);
+        recentProducts.remove(removedName);
+
+        System.out.println("Product '" + removedName + "' (ID: " + id + ") removed successfully!");
+    }
+
+    // Module 3: Product Category Management (HashSet)
+    private static void manageCategories(Scanner sc) {
+        System.out.println("\n--- CATEGORY MANAGEMENT ---");
+        System.out.println("1. Add Category");
+        System.out.println("2. Search Category");
+        System.out.println("3. Remove Category");
+        System.out.print("Choose an option: ");
+        int subChoice = sc.nextInt();
+        sc.nextLine();
+
+        switch (subChoice) {
+            case 1:
+                System.out.print("Enter Category Name to Add: ");
+                String catAdd = sc.nextLine();
+                if (categories.add(catAdd)) {
+                    System.out.println("Category '" + catAdd + "' added successfully!");
+                } else {
+                    System.out.println("Category '" + catAdd + "' already exists (duplicate prevented)!");
+                }
+                break;
+            case 2:
+                System.out.print("Enter Category Name to Search: ");
+                String catSearch = sc.nextLine();
+                System.out.println("Category Exists? " + categories.contains(catSearch));
+                break;
+            case 3:
+                System.out.print("Enter Category Name to Remove: ");
+                String catRem = sc.nextLine();
+                if (categories.remove(catRem)) {
+                    System.out.println("Category '" + catRem + "' removed.");
+                } else {
+                    System.out.println("Category '" + catRem + "' not found.");
+                }
+                break;
+            default:
+                System.out.println("Invalid sub-option.");
+        }
+    }
+
+    // Module 3: Display Unique Categories (HashSet)
+    private static void displayUniqueCategories() {
+        System.out.println("\nPRODUCT CATEGORIES");
+        if (categories.isEmpty()) {
+            System.out.println("No categories available.");
+            return;
+        }
+        for (String cat : categories) {
+            System.out.println(cat);
+        }
+        System.out.println("Total Unique Categories: " + categories.size());
+    }
+
+    // Module 4: Sorted Category Display (TreeSet)
+    private static void displaySortedCategories() {
+        System.out.println("\nSORTED CATEGORIES");
+        if (categories.isEmpty()) {
+            System.out.println("No categories available.");
+            return;
+        }
+        TreeSet<String> sortedCategories = new TreeSet<>(categories);
+        for (String cat : sortedCategories) {
+            System.out.println(cat);
+        }
+        System.out.println("First Category: " + sortedCategories.first());
+        System.out.println("Last Category: " + sortedCategories.last());
+        System.out.println("Descending Order: " + sortedCategories.descendingSet());
+    }
+
+    // Module 5: Recently Added Products (LinkedHashSet)
+    private static void manageRecentProducts(Scanner sc) {
+        System.out.println("\nRECENTLY ADDED PRODUCTS (Insertion Order)");
+        if (recentProducts.isEmpty()) {
+            System.out.println("No recently added products.");
+        } else {
+            for (String prod : recentProducts) {
+                System.out.println("- " + prod);
+            }
+        }
+
+        System.out.print("\nDo you want to (1) Search or (2) Remove a product from recent list, or (0) Back? ");
+        int opt = sc.nextInt();
+        sc.nextLine();
+        if (opt == 1) {
+            System.out.print("Enter Product Name to Search: ");
+            String name = sc.nextLine();
+            System.out.println("In Recently Added List? " + recentProducts.contains(name));
+        } else if (opt == 2) {
+            System.out.print("Enter Product Name to Remove: ");
+            String name = sc.nextLine();
+            if (recentProducts.remove(name)) {
+                System.out.println("Removed '" + name + "' from recently added products.");
+            } else {
+                System.out.println("Product '" + name + "' not found in recently added list.");
+            }
+        }
+    }
+
+    // Module 7: Inventory Report
+    private static void generateInventoryReport() {
+        System.out.println("\n====================================");
+        System.out.println("INVENTORY REPORT");
+        System.out.println("====================================");
+
+        displayAllProducts();
+
+        System.out.println("\n--- LOW STOCK PRODUCTS (Quantity Below 5) ---");
+        boolean anyLowStock = false;
+        int totalUnits = 0;
+        int maxQty = -1;
+        int highestProductId = -1;
+
+        for (Map.Entry<Integer, Integer> entry : inventory.entrySet()) {
+            int id = entry.getKey();
+            int qty = entry.getValue();
+            totalUnits += qty;
+
+            if (qty < 5) {
+                System.out.println("ID: " + id + " | Product: " + productNames.get(id) + " | Qty: " + qty);
+                anyLowStock = true;
+            }
+            if (qty > maxQty) {
+                maxQty = qty;
+                highestProductId = id;
+            }
+        }
+
+        if (!anyLowStock) {
+            System.out.println("None");
+        }
+
+        System.out.println("\nTotal Product Units Available: " + totalUnits);
+        if (highestProductId != -1) {
+            System.out.println("Product with Highest Quantity: " + productNames.get(highestProductId) +
+                    " (ID: " + highestProductId + ", Qty: " + maxQty + ")");
+        }
+
+        displayUniqueCategories();
+    }
+}
