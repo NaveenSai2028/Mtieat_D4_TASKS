@@ -1,0 +1,27 @@
+import java.util.LinkedHashSet;
+
+public class WebsiteVisitorTracking {
+    public static void main(String[] args) {
+        LinkedHashSet<Integer> visitors = new LinkedHashSet<>();
+
+        visitors.add(501);
+        visitors.add(502);
+        visitors.add(503);
+        visitors.add(504);
+
+        // add new visitor & duplicate (ignored)
+        visitors.add(505);
+        visitors.add(502);
+        System.out.println(visitors);
+
+        // remove visitor
+        visitors.remove(503);
+        System.out.println(visitors);
+
+        // check if visited
+        System.out.println(visitors.contains(504));
+
+        // total unique visitors
+        System.out.println(visitors.size());
+    }
+}
